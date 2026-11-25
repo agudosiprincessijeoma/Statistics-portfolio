@@ -42,6 +42,6 @@ R (dplyr, tidyr, ggplot2, car, broom) · IBM SPSS Statistics · Microsoft Excel 
 
 ## About me
 
-I am a statistician with an MSc in Statistics and a background in Industrial Mathematics and Applied Statistics. Since 2024 I have carried out statistical analysis for postgraduate theses and research projects, and I also teach mathematics at secondary level and run an online maths tutoring business. That mix means I care about two things in every analysis: getting the method right, and explaining the result so that someone without a statistics background can act on it.
+I am a statistician with an MSc in Statistics and a background in Industrial Mathematics and Applied Statistics. Since 2023 I have carried out statistical analysis for postgraduate theses and research projects, and I also teach mathematics at secondary level and run an online maths tutoring business. That mix means I care about two things in every analysis: getting the method right, and explaining the result so that someone without a statistics background can act on it.
 
 *All datasets are publicly available and are credited in each project's README.*
