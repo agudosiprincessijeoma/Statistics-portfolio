@@ -1,9 +1,10 @@
 # Statistics and Data Analysis Portfolio
 
 **Princess Ijeoma Agudosi** &nbsp;|&nbsp; MSc Statistics &nbsp;|&nbsp; BSc Industrial Mathematics and Applied Statistics
+
 Statistician and data analyst working in R, SPSS and Excel
 
-📧 agudosiprincessijeoma@gmail.com &nbsp;|&nbsp; 🔗 [LinkedIn](https://www.linkedin.com/in/YOUR-PROFILE)
+📧 agudosiprincessijeoma@gmail.com &nbsp;|&nbsp; 🔗 [LinkedIn](https://www.linkedin.com/in/princessagudosi)
 
 ---
 
