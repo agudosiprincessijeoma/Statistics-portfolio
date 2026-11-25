@@ -1,0 +1,269 @@
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+Loading required package: carData
+
+Attaching package: 'car'
+
+The following object is masked from 'package:dplyr':
+
+    recode
+
+'data.frame':	1338 obs. of  7 variables:
+ $ age     : int  19 18 28 33 32 31 46 37 37 60 ...
+ $ sex     : Factor w/ 2 levels "female","male": 1 2 2 2 2 1 1 1 2 1 ...
+ $ bmi     : num  27.9 33.8 33 22.7 28.9 ...
+ $ children: int  0 1 3 0 0 0 1 3 2 0 ...
+ $ smoker  : Factor w/ 2 levels "no","yes": 2 1 1 1 1 1 1 1 1 1 ...
+ $ region  : Factor w/ 4 levels "northeast","northwest",..: 4 3 3 2 2 3 3 2 1 2 ...
+ $ charges : num  16885 1726 4449 21984 3867 ...
+
+Missing: 0 | Duplicate rows: 1 
+      age            sex           bmi           children     smoker    
+ Min.   :18.00   female:662   Min.   :15.96   Min.   :0.000   no :1063  
+ 1st Qu.:27.00   male  :675   1st Qu.:26.29   1st Qu.:0.000   yes: 274  
+ Median :39.00                Median :30.40   Median :1.000             
+ Mean   :39.22                Mean   :30.66   Mean   :1.096             
+ 3rd Qu.:51.00                3rd Qu.:34.70   3rd Qu.:2.000             
+ Max.   :64.00                Max.   :53.13   Max.   :5.000             
+       region       charges      obese    
+ northeast:324   Min.   : 1122   no :631  
+ northwest:324   1st Qu.: 4746   yes:706  
+ southeast:364   Median : 9386            
+ southwest:325   Mean   :13279            
+                 3rd Qu.:16658            
+                 Max.   :63770            
+
+Mean charges by smoker status:
+# A tibble: 2 x 4
+  smoker     n   mean median
+  <fct>  <int>  <dbl>  <dbl>
+1 no      1063  8441.  7346.
+2 yes      274 32050. 34456.
+
+Skewness indicator: mean = 13279  median = 9386 
+`geom_smooth()` using formula = 'y ~ x'
+
+Training rows: 1070 | Test rows: 267 
+
+================ m1 ================
+
+Call:
+lm(formula = charges ~ age + sex + bmi + children + smoker + 
+    region, data = train)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-11090.1  -2758.1   -850.5   1525.7  30197.4 
+
+Coefficients:
+                 Estimate Std. Error t value            Pr(>|t|)    
+(Intercept)     -11836.80    1059.28 -11.174 <0.0000000000000002 ***
+age                248.78      12.93  19.237 <0.0000000000000002 ***
+sexmale            -73.09     361.03  -0.202              0.8396    
+bmi                349.45      31.15  11.218 <0.0000000000000002 ***
+children           371.42     148.62   2.499              0.0126 *  
+smokeryes        23769.70     448.30  53.022 <0.0000000000000002 ***
+regionnorthwest   -555.66     516.04  -1.077              0.2818    
+regionsoutheast  -1269.04     515.53  -2.462              0.0140 *  
+regionsouthwest  -1147.22     518.59  -2.212              0.0272 *  
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 5874 on 1061 degrees of freedom
+Multiple R-squared:  0.7585,	Adjusted R-squared:  0.7567 
+F-statistic: 416.5 on 8 and 1061 DF,  p-value: < 0.00000000000000022
+
+
+================ m2 ================
+
+Call:
+lm(formula = log(charges) ~ age + sex + bmi + children + smoker + 
+    region, data = train)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.09207 -0.19442 -0.03972  0.07254  2.18110 
+
+Coefficients:
+                  Estimate Std. Error t value             Pr(>|t|)    
+(Intercept)      7.0061989  0.0777112  90.157 < 0.0000000000000002 ***
+age              0.0343457  0.0009488  36.200 < 0.0000000000000002 ***
+sexmale         -0.0728429  0.0264860  -2.750             0.006056 ** 
+bmi              0.0149492  0.0022853   6.542      0.0000000000945 ***
+children         0.0954427  0.0109035   8.753 < 0.0000000000000002 ***
+smokeryes        1.5749087  0.0328882  47.887 < 0.0000000000000002 ***
+regionnorthwest -0.0921218  0.0378577  -2.433             0.015123 *  
+regionsoutheast -0.1946060  0.0378208  -5.145      0.0000003177559 ***
+regionsouthwest -0.1311790  0.0380451  -3.448             0.000587 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.431 on 1061 degrees of freedom
+Multiple R-squared:  0.7777,	Adjusted R-squared:  0.7761 
+F-statistic: 464.1 on 8 and 1061 DF,  p-value: < 0.00000000000000022
+
+
+================ m3 ================
+
+Call:
+lm(formula = charges ~ age + I(age^2) + sex + bmi + children + 
+    region + smoker * obese, data = train)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-17074.3  -1574.3  -1054.6   -503.2  24366.1 
+
+Coefficients:
+                     Estimate Std. Error t value             Pr(>|t|)    
+(Intercept)         -823.5814  1419.3990  -0.580             0.561881    
+age                  -11.0956    62.2744  -0.178             0.858622    
+I(age^2)               3.4079     0.7798   4.370         0.0000136268 ***
+sexmale             -535.7127   256.5175  -2.088             0.037000 *  
+bmi                  148.1714    35.8452   4.134         0.0000385280 ***
+children             608.5146   110.3028   5.517         0.0000000434 ***
+regionnorthwest     -280.4840   366.3985  -0.766             0.444135    
+regionsoutheast     -925.2304   366.1679  -2.527             0.011656 *  
+regionsouthwest    -1376.2537   368.0497  -3.739             0.000194 ***
+smokeryes          13273.5720   459.9284  28.860 < 0.0000000000000002 ***
+obeseyes           -1338.9474   443.3454  -3.020             0.002588 ** 
+smokeryes:obeseyes 20028.6770   633.9524  31.593 < 0.0000000000000002 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4167 on 1058 degrees of freedom
+Multiple R-squared:  0.8788,	Adjusted R-squared:  0.8775 
+F-statistic: 697.4 on 11 and 1058 DF,  p-value: < 0.00000000000000022
+
+
+Variance inflation factors (M3, main effects model used for VIF):
+             GVIF Df GVIF^(1/(2*Df))
+age      1.023276  1        1.011571
+sex      1.010309  1        1.005141
+bmi      2.947977  1        1.716967
+children 1.005649  1        1.002821
+region   1.119222  3        1.018950
+smoker   1.017846  1        1.008883
+obese    2.777770  1        1.666664
+null device 
+          1 
+null device 
+          1 
+
+Observations with Cook's distance > 4/n: 68 
+Largest Cook's distance: 0.0393 
+Non-constant Variance Score Test 
+Variance formula: ~ fitted.values 
+Chisquare = 0.0198368, Df = 1, p = 0.88799
+                                 term  estimate    se_ols   se_hc3
+(Intercept)               (Intercept)  -823.581 1419.3990 1498.440
+age                               age   -11.096   62.2744   63.376
+I(age^2)                     I(age^2)     3.408    0.7798    0.771
+sexmale                       sexmale  -535.713  256.5175  261.752
+bmi                               bmi   148.171   35.8452   38.563
+children                     children   608.515  110.3028  119.060
+regionnorthwest       regionnorthwest  -280.484  366.3985  390.445
+regionsoutheast       regionsoutheast  -925.230  366.1679  403.959
+regionsouthwest       regionsouthwest -1376.254  368.0497  365.768
+smokeryes                   smokeryes 13273.572  459.9284  374.763
+obeseyes                     obeseyes -1338.947  443.3454  492.886
+smokeryes:obeseyes smokeryes:obeseyes 20028.677  633.9524  598.578
+                                    model adj_r2   AIC test_RMSE test_MAE
+M1           M1: linear, all main effects 0.7567 21619      6790     4649
+M2     M2: log(charges), all main effects 0.7761    NA     10846     5927
+M3 M3: age^2 + smoker x obese interaction 0.8775 20887      5435     2824
+   test_R2
+M1  0.7247
+M2  0.6276
+M3  0.8244
+
+Call:
+lm(formula = charges ~ age + I(age^2) + sex + bmi + children + 
+    region + smoker * obese, data = ins)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-17296.8  -1657.8  -1267.9   -723.5  24155.4 
+
+Coefficients:
+                     Estimate Std. Error t value             Pr(>|t|)    
+(Intercept)          148.7886  1364.4516   0.109             0.913182    
+age                  -33.1785    59.8773  -0.554             0.579598    
+I(age^2)               3.7367     0.7468   5.003       0.000000639058 ***
+sexmale             -495.1238   244.5453  -2.025             0.043101 *  
+bmi                  119.8053    34.2887   3.494             0.000491 ***
+children             678.1403   105.9337   6.402       0.000000000213 ***
+regionnorthwest     -275.7826   349.6614  -0.789             0.430421    
+regionsoutheast     -828.5668   351.7594  -2.355             0.018643 *  
+regionsouthwest    -1222.6260   350.6523  -3.487             0.000505 ***
+smokeryes          13404.6397   440.1045  30.458 < 0.0000000000000002 ***
+obeseyes            -995.7662   423.3452  -2.352             0.018812 *  
+smokeryes:obeseyes 19808.7249   604.9238  32.746 < 0.0000000000000002 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 4446 on 1325 degrees of freedom
+Multiple R-squared:  0.8663,	Adjusted R-squared:  0.8652 
+F-statistic: 780.5 on 11 and 1325 DF,  p-value: < 0.00000000000000022
+
+# A tibble: 12 x 7
+   term               estimate std.error statistic   p.value conf.low conf.high
+   <chr>                 <dbl>     <dbl>     <dbl>     <dbl>    <dbl>     <dbl>
+ 1 (Intercept)          149.    1364.        0.109 9.13e-  1 -2528.     2826.  
+ 2 age                  -33.2     59.9      -0.554 5.80e-  1  -151.       84.3 
+ 3 I(age^2)               3.74     0.747     5.00  6.39e-  7     2.27      5.20
+ 4 sexmale             -495.     245.       -2.02  4.31e-  2  -975.      -15.4 
+ 5 bmi                  120.      34.3       3.49  4.91e-  4    52.5     187.  
+ 6 children             678.     106.        6.40  2.13e- 10   470.      886.  
+ 7 regionnorthwest     -276.     350.       -0.789 4.30e-  1  -962.      410.  
+ 8 regionsoutheast     -829.     352.       -2.36  1.86e-  2 -1519.     -139.  
+ 9 regionsouthwest    -1223.     351.       -3.49  5.05e-  4 -1911.     -535.  
+10 smokeryes          13405.     440.       30.5   6.88e-155 12541.    14268.  
+11 obeseyes            -996.     423.       -2.35  1.88e-  2 -1826.     -165.  
+12 smokeryes:obeseyes 19809.     605.       32.7   8.29e-173 18622.    20995.  
+# A tibble: 1 x 12
+  r.squared adj.r.squared sigma statistic p.value    df  logLik    AIC    BIC
+      <dbl>         <dbl> <dbl>     <dbl>   <dbl> <dbl>   <dbl>  <dbl>  <dbl>
+1     0.866         0.865 4446.      781.       0    11 -13122. 26269. 26337.
+# i 3 more variables: deviance <dbl>, df.residual <int>, nobs <int>
+  age    sex bmi children    region smoker obese predicted
+1  40 female  32        1 southeast     no   yes  7487.962
+2  40 female  32        1 southeast    yes   yes 40701.327
+R version 4.3.3 (2024-02-29)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 24.04.5 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0
+
+locale:
+[1] C
+
+time zone: Africa/Lagos
+tzcode source: system (glibc)
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] broom_1.0.5   car_3.1-2     carData_3.0-5 ggplot2_3.4.4 dplyr_1.1.4  
+
+loaded via a namespace (and not attached):
+ [1] vctrs_0.6.5      nlme_3.1-164     cli_3.6.2        rlang_1.1.3     
+ [5] purrr_1.0.2      generics_0.1.3   labeling_0.4.3   glue_1.7.0      
+ [9] colorspace_2.1-0 backports_1.4.1  scales_1.3.0     fansi_1.0.5     
+[13] grid_4.3.3       munsell_0.5.0    tibble_3.2.1     abind_1.4-5     
+[17] ellipsis_0.3.2   lifecycle_1.0.4  compiler_4.3.3   pkgconfig_2.0.3 
+[21] mgcv_1.9-1       tidyr_1.3.1      lattice_0.22-5   farver_2.1.1    
+[25] R6_2.5.1         tidyselect_1.2.0 utf8_1.2.4       splines_4.3.3   
+[29] pillar_1.9.0     magrittr_2.0.3   Matrix_1.6-5     tools_4.3.3     
+[33] withr_2.5.0      gtable_0.3.4    

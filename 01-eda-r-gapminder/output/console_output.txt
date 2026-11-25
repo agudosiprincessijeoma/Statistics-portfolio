@@ -1,0 +1,145 @@
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+'data.frame':	1704 obs. of  6 variables:
+ $ country  : chr  "Afghanistan" "Afghanistan" "Afghanistan" "Afghanistan" ...
+ $ continent: chr  "Asia" "Asia" "Asia" "Asia" ...
+ $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+ $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+ $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+ $ gdpPercap: num  779 821 853 836 740 ...
+
+Missing values per column:
+  country continent      year   lifeExp       pop gdpPercap 
+        0         0         0         0         0         0 
+
+Countries: 142  | Years: 1952 to 2007  | Rows: 1704 
+                          [,1]
+lifeExp_mean             59.47
+lifeExp_median           60.71
+lifeExp_sd               12.92
+lifeExp_min              23.60
+lifeExp_max              82.60
+gdpPercap_mean         7215.33
+gdpPercap_median       3531.85
+gdpPercap_sd           9857.45
+gdpPercap_min           241.17
+gdpPercap_max        113523.13
+pop_mean           29601212.32
+pop_median          7023595.50
+pop_sd            106157896.74
+pop_min               60011.00
+pop_max          1318683096.00
+# A tibble: 5 x 6
+  continent countries median_lifeExp mean_lifeExp sd_lifeExp median_gdp
+  <chr>         <int>          <dbl>        <dbl>      <dbl>      <dbl>
+1 Oceania           2           80.7         80.7        0.7      29810
+2 Europe           30           78.6         77.6        3        28054
+3 Americas         25           72.9         73.6        4.4       8948
+4 Asia             33           72.4         70.7        8         4471
+5 Africa           52           52.9         54.8        9.6       1452
+
+Skewness check (mean vs median of GDP per capita, 2007):
+      mean   median
+1 11680.07 6124.371
+
+Correlation (2007): raw GDP r = 0.679 | log10 GDP r = 0.809
+
+Largest gains in life expectancy, 1952 to 2007:
+# A tibble: 5 x 5
+  country      continent y1952 y2007  gain
+  <chr>        <chr>     <dbl> <dbl> <dbl>
+1 Oman         Asia       37.6  75.6  38.1
+2 Vietnam      Asia       40.4  74.2  33.8
+3 Indonesia    Asia       37.5  70.6  33.2
+4 Saudi Arabia Asia       39.9  72.8  32.9
+5 Libya        Africa     42.7  74.0  31.2
+
+Smallest gains (or losses):
+# A tibble: 5 x 5
+  country   continent y1952 y2007   gain
+  <chr>     <chr>     <dbl> <dbl>  <dbl>
+1 Botswana  Africa     47.6  50.7  3.11 
+2 Lesotho   Africa     42.1  42.6  0.454
+3 Zambia    Africa     42.0  42.4  0.346
+4 Swaziland Africa     41.4  39.6 -1.79 
+5 Zimbabwe  Africa     48.5  43.5 -4.96 
+   year lifeExp gdpPercap       pop
+1  1952  36.324  1077.282  33119096
+2  1957  37.802  1100.593  37173340
+3  1962  39.360  1150.927  41871351
+4  1967  41.040  1014.514  47287752
+5  1972  42.821  1698.389  53740085
+6  1977  44.514  1981.952  62209173
+7  1982  45.826  1576.974  73039376
+8  1987  46.886  1385.030  81551520
+9  1992  47.472  1619.848  93364244
+10 1997  47.464  1624.941 106207839
+11 2002  46.608  1615.286 119901274
+12 2007  46.859  2013.977 135031164
+
+Nigeria's rank among 52 African countries in 2007:
+  country lifeExp rank_lifeExp gdpPercap rank_gdp
+1 Nigeria  46.859           40  2013.977       19
+
+Sharp drops in life expectancy (more than 3 years between surveys):
+# A tibble: 30 x 5
+# Groups:   country [20]
+   country      continent  year lifeExp change
+   <chr>        <chr>     <int>   <dbl>  <dbl>
+ 1 Rwanda       Africa     1992    23.6 -20.4 
+ 2 Zimbabwe     Africa     1997    46.8 -13.6 
+ 3 Lesotho      Africa     2002    44.6 -11.0 
+ 4 Swaziland    Africa     2002    43.9 -10.4 
+ 5 Botswana     Africa     1997    52.6 -10.2 
+ 6 Cambodia     Asia       1977    31.2  -9.10
+ 7 Namibia      Africa     2002    51.5  -7.43
+ 8 South Africa Africa     2002    53.4  -6.87
+ 9 Zimbabwe     Africa     2002    40.0  -6.82
+10 China        Asia       1962    44.5  -6.05
+11 Botswana     Africa     2002    46.6  -5.92
+12 Zambia       Africa     1997    40.2  -5.86
+13 Iraq         Asia       1992    59.5  -5.58
+14 Liberia      Africa     1992    40.8  -5.23
+15 Cambodia     Asia       1972    40.3  -5.10
+16 Kenya        Africa     1997    54.4  -4.88
+17 Somalia      Africa     1992    39.7  -4.84
+18 Zambia       Africa     1992    46.1  -4.72
+19 Swaziland    Africa     2007    39.6  -4.26
+20 Uganda       Africa     1997    44.6  -4.25
+# i 10 more rows
+R version 4.3.3 (2024-02-29)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 24.04.5 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0
+
+locale:
+[1] C
+
+time zone: Africa/Lagos
+tzcode source: system (glibc)
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] scales_1.3.0  ggplot2_3.4.4 tidyr_1.3.1   dplyr_1.1.4  
+
+loaded via a namespace (and not attached):
+ [1] labeling_0.4.3   utf8_1.2.4       R6_2.5.1         tidyselect_1.2.0
+ [5] farver_2.1.1     magrittr_2.0.3   gtable_0.3.4     glue_1.7.0      
+ [9] tibble_3.2.1     pkgconfig_2.0.3  generics_0.1.3   lifecycle_1.0.4 
+[13] cli_3.6.2        fansi_1.0.5      grid_4.3.3       vctrs_0.6.5     
+[17] withr_2.5.0      compiler_4.3.3   tools_4.3.3      purrr_1.0.2     
+[21] munsell_0.5.0    pillar_1.9.0     colorspace_2.1-0 rlang_1.1.3     

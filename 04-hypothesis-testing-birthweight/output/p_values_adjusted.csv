@@ -1,0 +1,8 @@
+"test","p_raw","p_holm","p_BH"
+"H1_ttest_smoking",0.007,0.0427,0.0184
+"H2_chisq_smoking",0.0265,0.0795,0.0371
+"H3_anova_race",0.0083,0.0427,0.0184
+"H4a_ttest_hyperten",0.1332,0.2664,0.1554
+"H4b_ttest_preterm",0.0061,0.0427,0.0184
+"H5_cor_motherwt",0.0105,0.0427,0.0184
+"H5b_cor_age",0.2165,0.2664,0.2165

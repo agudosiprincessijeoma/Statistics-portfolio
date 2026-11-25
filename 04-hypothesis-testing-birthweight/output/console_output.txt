@@ -1,0 +1,366 @@
+
+Attaching package: 'dplyr'
+
+The following objects are masked from 'package:stats':
+
+    filter, lag
+
+The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union
+
+Loading required package: carData
+
+Attaching package: 'car'
+
+The following object is masked from 'package:dplyr':
+
+    recode
+
+'data.frame':	189 obs. of  15 variables:
+ $ low    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ age    : int  19 33 20 21 18 21 22 17 29 26 ...
+ $ lwt    : int  182 155 105 108 107 124 118 103 123 113 ...
+ $ race   : int  2 3 1 1 1 3 1 3 1 1 ...
+ $ smoke  : int  0 0 1 1 1 0 0 0 1 1 ...
+ $ ptl    : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ ht     : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ ui     : int  1 0 0 1 1 0 0 0 0 0 ...
+ $ ftv    : int  0 3 1 2 0 0 1 1 1 0 ...
+ $ bwt    : int  2523 2551 2557 2594 2600 2622 2637 2637 2663 2665 ...
+ $ smoke_f: Factor w/ 2 levels "Non-smoker","Smoker": 1 1 2 2 2 1 1 1 2 2 ...
+ $ low_f  : Factor w/ 2 levels "Normal weight",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ race_f : Factor w/ 3 levels "White","Black",..: 2 3 1 1 1 3 1 3 1 1 ...
+ $ ht_f   : Factor w/ 2 levels "No hypertension",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ ptl_any: Factor w/ 2 levels "No previous preterm",..: 1 1 1 1 1 1 1 1 1 1 ...
+Missing values: 0 
+# A tibble: 2 x 6
+  smoke_f        n mean_bwt sd_bwt median_bwt pct_low
+  <fct>      <int>    <dbl>  <dbl>      <dbl>   <dbl>
+1 Non-smoker   115    3056.   753.      3100     25.2
+2 Smoker        74    2772.   660.      2776.    40.5
+
+== H1: birth weight by smoking status ==
+bw$smoke_f: Non-smoker
+
+	Shapiro-Wilk normality test
+
+data:  x
+W = 0.98694, p-value = 0.3337
+
+------------------------------------------------------------ 
+bw$smoke_f: Smoker
+
+	Shapiro-Wilk normality test
+
+data:  x
+W = 0.98296, p-value = 0.4195
+
+Levene's Test for Homogeneity of Variance (center = mean)
+       Df F value Pr(>F)
+group   1  1.5733 0.2113
+      187               
+
+	Welch Two Sample t-test
+
+data:  bwt by smoke_f
+t = 2.7299, df = 170.1, p-value = 0.007003
+alternative hypothesis: true difference in means between group Non-smoker and group Smoker is not equal to 0
+95 percent confidence interval:
+  78.57486 488.97860
+sample estimates:
+mean in group Non-smoker     mean in group Smoker 
+                3055.696                 2771.919 
+
+Cohen's d = 0.40
+
+	Wilcoxon rank sum test with continuity correction
+
+data:  bwt by smoke_f
+W = 5249.5, p-value = 0.006768
+alternative hypothesis: true location shift is not equal to 0
+
+
+     Two-sample t test power calculation 
+
+              n = 74
+          delta = 283.7767
+             sd = 717.7792
+      sig.level = 0.05
+          power = 0.6660514
+    alternative = two.sided
+
+NOTE: n is number in *each* group
+
+
+== H2: low birth weight by smoking (chi-square) ==
+            
+             Normal weight Low birth weight Sum
+  Non-smoker            86               29 115
+  Smoker                44               30  74
+  Sum                  130               59 189
+            
+             Normal weight Low birth weight
+  Non-smoker          74.8             25.2
+  Smoker              59.5             40.5
+
+	Pearson's Chi-squared test
+
+data:  tab
+X-squared = 4.9237, df = 1, p-value = 0.02649
+
+            
+             Normal weight Low birth weight
+  Non-smoker      79.10053         35.89947
+  Smoker          50.89947         23.10053
+
+	Pearson's Chi-squared test with Yates' continuity correction
+
+data:  tab
+X-squared = 4.2359, df = 1, p-value = 0.03958
+
+Risk: smokers 40.5%, non-smokers 25.2% | Risk difference = 15.3 points
+Relative risk = 1.61 (95% CI 1.06 to 2.44)
+
+	Fisher's Exact Test for Count Data
+
+data:  tab
+p-value = 0.03618
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+ 1.028780 3.964904
+sample estimates:
+odds ratio 
+  2.014137 
+
+
+	2-sample test for equality of proportions without continuity
+	correction
+
+data:  tab[, 2] out of rowSums(tab)
+X-squared = 4.9237, df = 1, p-value = 0.02649
+alternative hypothesis: two.sided
+95 percent confidence interval:
+ -0.29039121 -0.01607177
+sample estimates:
+   prop 1    prop 2 
+0.2521739 0.4054054 
+
+
+== H3: birth weight by race ==
+# A tibble: 3 x 4
+  race_f     n  mean    sd
+  <fct>  <int> <dbl> <dbl>
+1 White     96 3103.  728.
+2 Black     26 2720.  639.
+3 Other     67 2805.  722.
+Levene's Test for Homogeneity of Variance (center = mean)
+       Df F value Pr(>F)
+group   2  0.4472 0.6401
+      186               
+             Df   Sum Sq Mean Sq F value  Pr(>F)   
+race_f        2  5015725 2507863   4.913 0.00834 **
+Residuals   186 94953931  510505                   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+Eta squared = 0.050
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = bwt ~ race_f, data = bw)
+
+$race_f
+                  diff       lwr        upr     p adj
+Black-White -383.02644 -756.2363  -9.816581 0.0428037
+Other-White -297.43517 -566.1652 -28.705095 0.0260124
+Other-Black   85.59127 -304.4521 475.634630 0.8624372
+
+
+	Kruskal-Wallis rank sum test
+
+data:  bwt by race_f
+Kruskal-Wallis chi-squared = 8.5199, df = 2, p-value = 0.01412
+
+
+	Shapiro-Wilk normality test
+
+data:  residuals(a3)
+W = 0.9894, p-value = 0.1737
+
+
+== H4: other clinical risk factors ==
+
+-- ht_f --
+# A tibble: 2 x 4
+  ht_f                n  mean pct_low
+  <fct>           <int> <dbl>   <dbl>
+1 No hypertension   177 2972.    29.4
+2 Hypertension       12 2537.    58.3
+
+	Welch Two Sample t-test
+
+data:  bw$bwt by bw[[v]]
+t = 1.6118, df = 11.909, p-value = 0.1332
+alternative hypothesis: true difference in means between group No hypertension and group Hypertension is not equal to 0
+95 percent confidence interval:
+ -153.6751 1024.4717
+sample estimates:
+mean in group No hypertension    mean in group Hypertension 
+                     2972.232                      2536.833 
+
+
+	Fisher's Exact Test for Count Data
+
+data:  table(bw[[v]], bw$low_f)
+p-value = 0.05161
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+  0.8679484 13.9894703
+sample estimates:
+odds ratio 
+  3.340866 
+
+
+-- ptl_any --
+# A tibble: 2 x 4
+  ptl_any                 n  mean pct_low
+  <fct>               <int> <dbl>   <dbl>
+1 No previous preterm   159 3013.    25.8
+2 Previous preterm       30 2579.    60  
+
+	Welch Two Sample t-test
+
+data:  bw$bwt by bw[[v]]
+t = 2.8999, df = 38.963, p-value = 0.006105
+alternative hypothesis: true difference in means between group No previous preterm and group Previous preterm is not equal to 0
+95 percent confidence interval:
+ 131.3022 736.8789
+sample estimates:
+mean in group No previous preterm    mean in group Previous preterm 
+                         3013.491                          2579.400 
+
+
+	Fisher's Exact Test for Count Data
+
+data:  table(bw[[v]], bw$low_f)
+p-value = 0.0004362
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+  1.777492 10.657857
+sample estimates:
+odds ratio 
+  4.278515 
+
+
+== H5: correlation between mother's weight and birth weight ==
+
+	Pearson's product-moment correlation
+
+data:  bw$lwt and bw$bwt
+t = 2.5848, df = 187, p-value = 0.0105
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.04417405 0.31998094
+sample estimates:
+      cor 
+0.1857333 
+
+
+	Spearman's rank correlation rho
+
+data:  bw$lwt and bw$bwt
+S = 845136, p-value = 0.0005535
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+      rho 
+0.2488882 
+
+
+	Pearson's product-moment correlation
+
+data:  bw$age and bw$bwt
+t = 1.2401, df = 187, p-value = 0.2165
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ -0.05309694  0.23008208
+sample estimates:
+       cor 
+0.09031781 
+
+                                 test  p_raw p_holm   p_BH
+H1_ttest_smoking     H1_ttest_smoking 0.0070 0.0427 0.0184
+H2_chisq_smoking     H2_chisq_smoking 0.0265 0.0795 0.0371
+H3_anova_race           H3_anova_race 0.0083 0.0427 0.0184
+H4a_ttest_hyperten H4a_ttest_hyperten 0.1332 0.2664 0.1554
+H4b_ttest_preterm   H4b_ttest_preterm 0.0061 0.0427 0.0184
+H5_cor_motherwt       H5_cor_motherwt 0.0105 0.0427 0.0184
+H5b_cor_age               H5b_cor_age 0.2165 0.2664 0.2165
+
+== Adjusted analysis: logistic regression for low birth weight ==
+
+Call:
+glm(formula = low ~ smoke_f + race_f + lwt + age + ht_f + ptl_any + 
+    factor(ui), family = binomial, data = bw)
+
+Coefficients:
+                        Estimate Std. Error z value Pr(>|z|)   
+(Intercept)              0.63691    1.23028   0.518  0.60467   
+smoke_fSmoker            0.84640    0.40806   2.074  0.03806 * 
+race_fBlack              1.21274    0.53248   2.278  0.02275 * 
+race_fOther              0.80412    0.44843   1.793  0.07294 . 
+lwt                     -0.01491    0.00704  -2.118  0.03419 * 
+age                     -0.03775    0.03781  -0.998  0.31808   
+ht_fHypertension         1.83869    0.70324   2.615  0.00893 **
+ptl_anyPrevious preterm  1.22175    0.46301   2.639  0.00832 **
+factor(ui)1              0.71113    0.46311   1.536  0.12465   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 234.67  on 188  degrees of freedom
+Residual deviance: 196.83  on 180  degrees of freedom
+AIC: 214.83
+
+Number of Fisher Scoring iterations: 4
+
+                           OR 2.5 % 97.5 %
+(Intercept)             1.891 0.170 21.078
+smoke_fSmoker           2.331 1.048  5.187
+race_fBlack             3.363 1.184  9.548
+race_fOther             2.235 0.928  5.382
+lwt                     0.985 0.972  0.999
+age                     0.963 0.894  1.037
+ht_fHypertension        6.288 1.585 24.954
+ptl_anyPrevious preterm 3.393 1.369  8.408
+factor(ui)1             2.036 0.822  5.047
+`geom_smooth()` using formula = 'y ~ x'
+R version 4.3.3 (2024-02-29)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: Ubuntu 24.04.5 LTS
+
+Matrix products: default
+BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.12.0 
+LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.12.0
+
+locale:
+[1] C
+
+time zone: Africa/Lagos
+tzcode source: system (glibc)
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] car_3.1-2     carData_3.0-5 ggplot2_3.4.4 dplyr_1.1.4  
+
+loaded via a namespace (and not attached):
+ [1] vctrs_0.6.5      nlme_3.1-164     cli_3.6.2        rlang_1.1.3     
+ [5] generics_0.1.3   glue_1.7.0       labeling_0.4.3   colorspace_2.1-0
+ [9] scales_1.3.0     fansi_1.0.5      grid_4.3.3       munsell_0.5.0   
+[13] tibble_3.2.1     abind_1.4-5      lifecycle_1.0.4  compiler_4.3.3  
+[17] pkgconfig_2.0.3  mgcv_1.9-1       lattice_0.22-5   farver_2.1.1    
+[21] R6_2.5.1         tidyselect_1.2.0 utf8_1.2.4       splines_4.3.3   
+[25] pillar_1.9.0     magrittr_2.0.3   Matrix_1.6-5     tools_4.3.3     
+[29] withr_2.5.0      gtable_0.3.4    
